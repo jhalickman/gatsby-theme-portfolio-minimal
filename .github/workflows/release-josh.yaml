@@ -27,14 +27,17 @@ jobs:
         needs: test
         runs-on: ubuntu-latest
         permissions:
-            contents: read
-            packages: write
+             contents: write # to be able to publish a GitHub release
+             issues: write # to be able to comment on released issues
+             pull-requests: write # to be able to comment on released pull requests
+             id-token: write # to enable use of OIDC for npm provenance
         steps:
             - uses: actions/checkout@v3
             - uses: actions/setup-node@v3
               with:
                   node-version: 18
                   registry-url: https://npm.pkg.github.com/
+                  scope: '@jhalickman'
             - uses: actions/cache@v3
               with:
                   path: '**/node_modules'
@@ -43,3 +46,7 @@ jobs:
             - run: yarn workspace gatsby-theme-portfolio-minimal semantic-release --branches main
               env:
                  NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                 GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                 GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                 NPM_TOKEN: ${{secrets.GITHUB_TOKEN}}
+                 NPM_CONFIG_REGISTRY: https://npm.pkg.github.com/
