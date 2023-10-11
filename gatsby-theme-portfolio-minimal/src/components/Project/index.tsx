@@ -67,7 +67,7 @@ export function Project(props: ProjectProps): React.ReactElement {
                                     rel="noopener noreferrer"
                                     aria-label="External Link"
                                 >
-                                    <Icon name={link.type} color="var(--subtext-color)" />
+                                    <Icon name={link.type} color="var(--subtext-color)" /> <p>{link.type}</p>
                                 </a>
                             );
                         })}
